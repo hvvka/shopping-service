@@ -8,13 +8,17 @@ import java.util.List;
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
-public interface ShoppingService {
+public interface OrderService {
 
-    void saveOrder(String client, List<Article> articles);
+    Order saveOrder(String client, List<Article> articles);
 
     void deleteOrder(long id);
 
-    List<Order> listOrders(String client);
+    Order findOrder(long id);
+
+    List<Order> listClientOrders(String client);
 
     List<Order> listAllOrders();
+
+    boolean doesOrderExists(Order order);
 }

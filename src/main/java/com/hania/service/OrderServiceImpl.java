@@ -13,21 +13,22 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
  */
 @Service("shoppingService")
-public class ShoppingServiceImpl implements ShoppingService {
+public class OrderServiceImpl implements OrderService {
 
     private final AtomicLong counter = new AtomicLong();
 
     private final OrderRepository orderRepository;
 
     @Autowired
-    public ShoppingServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
     @Override
-    public void saveOrder(String client, List<Article> articles) {
+    public Order saveOrder(String client, List<Article> articles) {
         Order order = new Order(counter.incrementAndGet(), client, articles);
         orderRepository.save(order);
+        return order;
     }
 
     @Override
@@ -36,12 +37,22 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public List<Order> listOrders(String client) {
+    public Order findOrder(long id) {
+        return orderRepository.findOrder(id);
+    }
+
+    @Override
+    public List<Order> listClientOrders(String client) {
         return orderRepository.findClientOrders(client);
     }
 
     @Override
     public List<Order> listAllOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public boolean doesOrderExists(Order order) {
+        return false;
     }
 }
