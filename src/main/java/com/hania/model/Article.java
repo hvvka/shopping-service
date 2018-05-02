@@ -1,4 +1,4 @@
-package com.hania;
+package com.hania.model;
 
 /**
  * @author <a href="mailto:226154@student.pwr.edu.pl">Hanna Grodzicka</a>
@@ -11,7 +11,7 @@ public class Article {
 
     private final int amount;
 
-    Article(long id, String item, int amount) {
+    public Article(long id, String item, int amount) {
         this.id = id;
         this.item = item;
         this.amount = amount;
