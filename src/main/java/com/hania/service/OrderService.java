@@ -12,7 +12,7 @@ public interface OrderService {
 
     Order saveOrder(String client, List<Article> articles);
 
-    void deleteOrder(long id);
+    boolean deleteOrder(long id);
 
     Order findOrder(long id);
 

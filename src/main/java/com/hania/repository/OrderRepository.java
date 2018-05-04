@@ -1,9 +1,9 @@
-package com.hania.model;
+package com.hania.repository;
 
+import com.hania.model.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,19 +16,22 @@ public class OrderRepository {
 
     private List<Order> orders;
 
-    public OrderRepository() {
-        orders = new ArrayList<>();
-        orders.add(new Order(0, "Client",
-                Arrays.asList(new Article(0, "lampa", 10),
-                        new Article(1, "marchewka", 5))));
+    private final OrderDAO orderDAO;
+
+    @Autowired
+    public OrderRepository(OrderDAO orderDAO) {
+        this.orderDAO = orderDAO;
+        orders = orderDAO.read();
     }
 
     public void save(Order order) {
         orders.add(order);
+        orderDAO.save(order);
     }
 
-    public void delete(long id) {
+    public boolean delete(long id) {
         orders.removeIf(o -> o.getId() == id);
+        return orderDAO.delete(id);
     }
 
     public Order findOrder(long id) {

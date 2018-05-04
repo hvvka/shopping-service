@@ -2,7 +2,7 @@ package com.hania.service;
 
 import com.hania.model.Article;
 import com.hania.model.Order;
-import com.hania.model.OrderRepository;
+import com.hania.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +32,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(long id) {
-        orderRepository.delete(id);
+    public boolean deleteOrder(long id) {
+        return orderRepository.delete(id);
     }
 
     @Override

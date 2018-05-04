@@ -37,6 +37,7 @@ public class OrderController {
                                             UriComponentsBuilder ucBuilder) {
         LOG.info("Creating Order for: {}", client);
         Order order = orderService.saveOrder(client, articles);
+        if (order == null) return ResponseEntity.noContent().build();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/shopping/order/{id}").buildAndExpand(order.getId()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
@@ -51,8 +52,8 @@ public class OrderController {
             LOG.error(message);
             return new ResponseEntity<>(new CustomErrorType(message), HttpStatus.BAD_REQUEST);
         }
-        orderService.deleteOrder(id);
-        return new ResponseEntity<Order>(HttpStatus.NO_CONTENT);
+        boolean isDeleted = orderService.deleteOrder(id);
+        return isDeleted ? new ResponseEntity<Order>(HttpStatus.OK) : new ResponseEntity<Order>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping(value = "/order/{id}")

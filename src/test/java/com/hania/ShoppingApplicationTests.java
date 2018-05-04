@@ -21,6 +21,8 @@ import static org.assertj.core.api.BDDAssertions.then;
 @TestPropertySource(properties = {"management.port=0"})
 public class ShoppingApplicationTests {
 
+    private static final String HOST = "http://localhost:";
+
     @LocalServerPort
     private int port;
 
@@ -32,28 +34,16 @@ public class ShoppingApplicationTests {
 
     @Test
     public void shouldReturn400WhenSendingRequestToController() {
-        @SuppressWarnings("rawtypes")
-        ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/shopping/orders", Map.class);
+        ResponseEntity<Map> entity = testRestTemplate.getForEntity(
+                HOST + this.port + "/shopping/order/0", Map.class);
 
-        then(entity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
-
-    @Test
-    public void shouldReturn200WhenSendingRequestToController() {
-        //todo send request body
-//        @SuppressWarnings("rawtypes")
-//        ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-//                "http://localhost:" + this.port + "/shopping?item=lampa", Map.class);
-//
-//        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     public void shouldReturn200WhenSendingRequestToManagementEndpoint() {
-        @SuppressWarnings("rawtypes")
-        ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.mgt + "/actuator/info", Map.class);
+        ResponseEntity<Map> entity = testRestTemplate.getForEntity(
+                HOST + this.mgt + "/actuator/info", Map.class);
 
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

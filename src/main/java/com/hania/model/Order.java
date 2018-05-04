@@ -7,11 +7,14 @@ import java.util.List;
  */
 public class Order {
 
-    private final long id;
+    private long id;
 
-    private final String client;
+    private String client;
 
-    private final List<Article> articles;
+    private List<Article> articles;
+
+    public Order() {
+    }
 
     public Order(long id, String client, List<Article> articles) {
         this.id = id;
