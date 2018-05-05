@@ -54,8 +54,17 @@ class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean delete(long id) {
-        Optional<File> file = Arrays.stream(readAllFiles()).filter(f -> f.getName().startsWith(id + "_")).findFirst();
+        Optional<File> file = Arrays.stream(readAllFiles())
+                .filter(f -> f.getName().startsWith(id + "_"))
+                .findFirst();
         return file.map(File::delete).orElse(false);
+    }
+
+    @Override
+    public void update(Order updatedOrder) {
+        long id = updatedOrder.getId();
+        boolean isDeleted = delete(id);
+        if (isDeleted) save(updatedOrder);
     }
 
     private File[] readAllFiles() {

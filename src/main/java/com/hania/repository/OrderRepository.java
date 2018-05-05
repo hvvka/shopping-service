@@ -1,5 +1,6 @@
 package com.hania.repository;
 
+import com.hania.model.Article;
 import com.hania.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,5 +50,23 @@ public class OrderRepository {
 
     public List<Order> findAll() {
         return orders;
+    }
+
+    public Order updateOrder(long id, List<Article> articles) {
+        Order order = findOrder(id);
+        if (order != null) {
+            Integer orderIndex = orders.indexOf(order);
+            if (orderIndex != -1) {
+                return getUpdatedOrder(articles, orderIndex);
+            }
+        }
+        return new Order();
+    }
+
+    private Order getUpdatedOrder(List<Article> articles, Integer orderIndex) {
+        orders.get(orderIndex).setArticles(articles);
+        Order updatedOrder = orders.get(orderIndex);
+        orderDAO.update(updatedOrder);
+        return updatedOrder;
     }
 }

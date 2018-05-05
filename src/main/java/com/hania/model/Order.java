@@ -34,6 +34,10 @@ public class Order {
         return articles;
     }
 
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

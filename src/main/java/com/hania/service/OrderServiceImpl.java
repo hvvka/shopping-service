@@ -55,4 +55,9 @@ public class OrderServiceImpl implements OrderService {
     public boolean doesOrderExists(Order order) {
         return false;
     }
+
+    @Override
+    public Order updateOrder(long id, List<Article> articles) {
+        return orderRepository.updateOrder(id, articles);
+    }
 }

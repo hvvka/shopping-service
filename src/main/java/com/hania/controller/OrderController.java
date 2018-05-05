@@ -85,4 +85,21 @@ public class OrderController {
         }
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/order/{id}")
+    public ResponseEntity updateOrder(@PathVariable("id") long id, @RequestBody List<Article> articles,
+                                      UriComponentsBuilder ucBuilder) {
+        LOG.info("Updating Order with id {}", id);
+        Order order = orderService.findOrder(id);
+        if (order == null) {
+            String message = String.format("Unable to update – Order with id %d not found", id);
+            LOG.error(message);
+            return new ResponseEntity<>(new CustomErrorType(message), HttpStatus.BAD_REQUEST);
+        }
+        Order updatedOrder = orderService.updateOrder(id, articles);
+        if (updatedOrder.getId() == 0) return ResponseEntity.noContent().build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/shopping/order/{id}").buildAndExpand(updatedOrder.getId()).toUri());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
 }

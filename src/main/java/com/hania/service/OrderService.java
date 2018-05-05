@@ -21,4 +21,6 @@ public interface OrderService {
     List<Order> listAllOrders();
 
     boolean doesOrderExists(Order order);
+
+    Order updateOrder(long id, List<Article> articles);
 }

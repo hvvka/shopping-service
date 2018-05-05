@@ -14,4 +14,6 @@ public interface OrderDAO {
     void save(Order order);
 
     boolean delete(long id);
+
+    void update(Order updatedOrder);
 }
