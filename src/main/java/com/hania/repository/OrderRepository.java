@@ -69,4 +69,8 @@ public class OrderRepository {
         orderDAO.update(updatedOrder);
         return updatedOrder;
     }
+
+    public int getOrderCount() {
+        return orders.size();
+    }
 }

@@ -15,13 +15,14 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service("shoppingService")
 public class OrderServiceImpl implements OrderService {
 
-    private final AtomicLong counter = new AtomicLong();
+    private final AtomicLong counter;
 
     private final OrderRepository orderRepository;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
+        counter = new AtomicLong(orderRepository.getOrderCount());
     }
 
     @Override
