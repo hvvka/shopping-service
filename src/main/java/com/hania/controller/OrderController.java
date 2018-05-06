@@ -63,7 +63,7 @@ public class OrderController {
         if (order == null) {
             String message = String.format("Order with id %d not found", id);
             LOG.error(message);
-            return new ResponseEntity<>(new CustomErrorType(message), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomErrorType(message), HttpStatus.OK);
         }
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
