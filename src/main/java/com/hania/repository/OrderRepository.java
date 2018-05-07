@@ -70,7 +70,7 @@ public class OrderRepository {
         return updatedOrder;
     }
 
-    public int getOrderCount() {
-        return orders.size();
+    public long getOrderIndex() {
+        return orders.isEmpty() ? 0 : orders.get(orders.size() - 1).getId();
     }
 }

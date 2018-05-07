@@ -33,18 +33,24 @@ public class ShoppingApplicationTests {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void shouldReturn400WhenSendingRequestToController() {
+    public void shouldReturn200WhenSendingRequestToController() {
+        // when
         ResponseEntity<Map> entity = testRestTemplate.getForEntity(
                 HOST + this.port + "/shopping/order/0", Map.class);
 
+        // then
+        String message = String.format("Order with id %d not found", 0);
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        then(entity.getBody()).containsValue(message);
     }
 
     @Test
     public void shouldReturn200WhenSendingRequestToManagementEndpoint() {
+        // when
         ResponseEntity<Map> entity = testRestTemplate.getForEntity(
                 HOST + this.mgt + "/actuator/info", Map.class);
 
+        // then
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

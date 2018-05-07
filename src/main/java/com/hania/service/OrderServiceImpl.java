@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        counter = new AtomicLong(orderRepository.getOrderCount());
+        counter = new AtomicLong(orderRepository.getOrderIndex());
     }
 
     @Override
